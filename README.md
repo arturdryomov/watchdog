@@ -7,18 +7,24 @@ sends notifications via Mail.app.
 
 ## Installation
 
-```
-$ cp watchdog.scpt ~/Library/Scripts/
-$ cp watchdog.plist ~/Library/LaunchAgents/
+1. Copy files.
 
-$ vim ~/Library/Scripts/watchdog.scpt
-$ vim ~/Library/LaunchAgents/watchdog.plist
-```
+  ```
+  $ cp watchdog.scpt ~/Library/Scripts/
+  $ cp watchdog.plist ~/Library/LaunchAgents/
+  ```
 
-Notice that you should modify files to make them work (you can see it above as `vim` calls).
+2. Set folders, filenames, links and message recipients, check out `property` values and the `checkFiles` section.
 
-* `watchdog.scpt` — folders, filenames, links and message recipients should be provided, check out `property` values and the `checkFiles` section.
-* `watchdog.plist` — a path to the script requires your username (`echo $USER`) at least, check out the `ProgramArguments` section.
+  ```
+  $ vim ~/Library/Scripts/watchdog.scpt
+  ```
+
+3. Set your username (`echo $USER`) at least, check out the `ProgramArguments` section.
+
+  ```
+  $ vim ~/Library/LaunchAgents/watchdog.plist
+  ```
 
 ## Usage
 
