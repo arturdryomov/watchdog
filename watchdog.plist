@@ -7,11 +7,9 @@
 		<key>Label</key>
 		<string>com.github.ming13.watchdog</string>
 
-		<key>Program</key>
-		<string>/usr/bin/osascript</string>
-
 		<key>ProgramArguments</key>
 		<array>
+			<string>/usr/bin/osascript</string>
 			<string>-l JavaScript</string>
 			<string>Library/Scripts/watchdog.scpt</string>
 		</array>

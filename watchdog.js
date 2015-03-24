@@ -1,47 +1,54 @@
 // Edit the section below
 
-var MAIL_RECIPIENTS = [
+MAIL_RECIPIENTS = [
   "first.last@mail.com"
 ]
 
-var FILES = {
-  "fileLink": "filePath"
+FILES = {
+  "link": "path"
 }
 
-var FILES_STABLE_DIRECTORY_PATH = "/stable"
-var FILES_TEMPORARY_DIRECTORY_PATH = "/temporary"
+FILES_STABLE_DIRECTORY_PATH = "/stable"
+FILES_TEMPORARY_DIRECTORY_PATH = "/temporary"
 
 // Edit the section above
 
 
 function run() {
-  for (var fileLink in FILES) {
-    var filePath = FILES[fileLink]
+  for (fileLink in FILES) {
+    filePath = FILES[fileLink]
 
     checkFile(fileLink, filePath)
   }
 }
 
 function checkFile(fileLink, filePath) {
-  var filesApplication = Application("Finder")
+  stableFilePath = getFilePath(FILES_STABLE_DIRECTORY_PATH, filePath)
+  temporaryFilePath = getFilePath(FILES_TEMPORARY_DIRECTORY_PATH, filePath)
 
-  var stableFilePath = getFilePath(FILES_STABLE_DIRECTORY_PATH, filePath)
-  var temporaryFilePath = getFilePath(FILES_TEMPORARY_DIRECTORY_PATH, filePath)
+  downloadFile(fileLink, temporaryFilePath)
 
-  downloadFile(fileLink, filePath)
+  filesApplication = Application("Finder")
 
-  if (!filesApplication.exists(stableFilePath)) {
-    filesApplication.move(temporaryFilePath, stableFilePath)
+  if (!filesApplication.exists(Path(stableFilePath))) {
+    filesApplication.move(Path(temporaryFilePath), {
+      to: Path(stableFilePath),
+      replacing: true
+    })
+
     return
   }
 
-  var stableFileHash = calculateHash(stableFilePath)
-  var temporaryFileHash = calculateHash(temporaryFilePath)
+  stableFileHash = calculateHash(stableFilePath)
+  temporaryFileHash = calculateHash(temporaryFilePath)
 
   if (stableFileHash != temporaryFileHash) {
-    filesApplication.move(temporaryFilePath, stableFilePath)
+    filesApplication.move(Path(temporaryFilePath), {
+      to: Path(stableFilePath),
+      replacing: true
+    })
 
-    sendMail()
+    sendMail(fileLink, stableFilePath)
   }
 }
 
@@ -50,32 +57,33 @@ function getFilePath(directoryPath, filePath) {
 }
 
 function downloadFile(fileLink, filePath) {
-    runShell("curl" + " " + "--remote-name" + " " + fileLink + "--output" + " " + filePath)
+    runShell("curl" + " " + fileLink + " " + "--output" + " " + filePath)
 }
 
 function calculateHash(filePath) {
-    return runShell("md5sum" + " " + filePath)
+    return runShell("md5" + " " + "-q" + " " + filePath)
 }
 
 function runShell(shellScript) {
-  return Application.currentApplication().doShellScript(shellScript)
+  application = Application.currentApplication()
+  application.includeStandardAdditions = true
+
+  return application.doShellScript(shellScript)
 }
 
 function sendMail(fileLink, filePath) {
-  var mailApplication = Application("Mail")
+  mailApplication = Application("Mail")
 
-  var mail = mailApplication.OutgoingMessage().make()
+  mail = mailApplication.OutgoingMessage().make()
 
-  for (mailRecipient in MAIL_RECIPIENTS) {
-    mail.toRecipients.push(Mail.Recipient({
+  for (mailRecipient of MAIL_RECIPIENTS) {
+    mail.toRecipients.push(mailApplication.Recipient({
       address: mailRecipient
     }))
   }
 
   mail.subject = "Watchdog: a file change was detected"
-
-  mail.content += "Link to the file is" + " " + fileLink + "."
-  mail.content += "Path to the file is" + " " + filePath + "."
+  mail.content = "Link to the file is" + " " + fileLink + "."
 
   mail.send()
 }
