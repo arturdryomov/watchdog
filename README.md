@@ -1,29 +1,27 @@
 # Watchdog
 
-This AppleScript checks remote files. For example, you need
+This script checks remote files. For example, you need
 an always-fresh copy of some remote file and to be notified if there are
-any changes. The script checks your files every 5 hours (by default) and
+any changes. The script checks your files every 6 hours (by default) and
 sends notifications via Mail.app.
+
+## Preconditions
+
+OS X Yosemite at least.
 
 ## Installation
 
 1. Copy files.
 
   ```
-  $ cp watchdog.scpt ~/Library/Scripts/
+  $ cp watchdog.js ~/Library/Scripts/
   $ cp watchdog.plist ~/Library/LaunchAgents/
   ```
 
-2. Set folders, filenames, links and message recipients, check out `property` values and the `checkFiles` section.
+2. Set directories, filenames, links and message recipients.
 
   ```
   $ vim ~/Library/Scripts/watchdog.scpt
-  ```
-
-3. Set your username (`echo $USER`) at least, check out the `ProgramArguments` section.
-
-  ```
-  $ vim ~/Library/LaunchAgents/watchdog.plist
   ```
 
 ## Usage
