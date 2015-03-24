@@ -1,12 +1,17 @@
+// Edit the section below
+
 var MAIL_RECIPIENTS = [
   "first.last@mail.com"
 ]
 
-var FILES_STABLE_DIRECTORY_PATH = "/stable"
-var FILES_TEMPORARY_DIRECTORY_PATH = "/temporary"
 var FILES = {
   "fileLink": "filePath"
 }
+
+var FILES_STABLE_DIRECTORY_PATH = "/stable"
+var FILES_TEMPORARY_DIRECTORY_PATH = "/temporary"
+
+// Edit the section above
 
 
 function run() {
