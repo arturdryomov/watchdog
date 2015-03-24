@@ -12,9 +12,12 @@
 
 		<key>ProgramArguments</key>
 		<array>
-			<string>osascript</string>
-			<string>/Users/USER/Library/Scripts/watchdog.scpt</string>
+			<string>-l JavaScript</string>
+			<string>Library/Scripts/watchdog.scpt</string>
 		</array>
+
+		<key>ProcessType</key>
+		<string>Background</string>
 
 		<key>RunAtLoad</key>
 		<true/>
