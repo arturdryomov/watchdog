@@ -14,27 +14,26 @@ OS X Yosemite at least.
 1. Copy files.
 
   ```
-  $ cp watchdog.js ~/Library/Scripts/
-  $ cp watchdog.plist ~/Library/LaunchAgents/
+  $ make install
   ```
 
 2. Set directories, filenames, links and message recipients.
 
   ```
-  $ vim ~/Library/Scripts/watchdog.scpt
+  $ make configuration
   ```
 
 ## Usage
 
 The script should work automagically after you log in.
-You can run the command below to make the script work without relogin as well.
+You can run the command below to make the script work without relogin.
 
 ```
-$ launchctl load ~/Library/LaunchAgents/watchdog.plist
+$ make kickstart
 ```
 
-Plus you can check how `launchd` sees it.
+Plus you can check how OS X sees it.
 
 ```
-$ launchctl list | grep watchdog
+$ make status
 ```
