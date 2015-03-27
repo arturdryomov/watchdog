@@ -28,25 +28,17 @@ function checkFile(fileLink, filePath) {
 
   downloadFile(fileLink, temporaryFilePath)
 
-  filesApplication = Application("Finder")
-
-  if (!filesApplication.exists(Path(stableFilePath))) {
-    filesApplication.move(Path(temporaryFilePath), {
-      to: Path(stableFilePath),
-      replacing: true
-    })
+  if (!isFileAvailable(stableFilePath)) {
+    moveFile(temporaryFilePath, stableFilePath)
 
     return
   }
 
-  stableFileHash = calculateHash(stableFilePath)
-  temporaryFileHash = calculateHash(temporaryFilePath)
+  stableFileHash = calculateFileHash(stableFilePath)
+  temporaryFileHash = calculateFileHash(temporaryFilePath)
 
   if (stableFileHash != temporaryFileHash) {
-    filesApplication.move(Path(temporaryFilePath), {
-      to: Path(stableFilePath),
-      replacing: true
-    })
+    moveFile(temporaryFilePath, stableFilePath)
 
     sendMail(fileLink, stableFilePath)
   }
@@ -60,7 +52,22 @@ function downloadFile(fileLink, filePath) {
     runShell("curl" + " " + fileLink + " " + "--output" + " " + filePath)
 }
 
-function calculateHash(filePath) {
+function isFileAvailable(filePath) {
+  filesApplication = Application("Finder")
+
+  return filesApplication.exists(Path(filePath))
+}
+
+function moveFile(sourceFilePath, destinationFilePath) {
+  filesApplication = Application("Finder")
+
+  filesApplication.move(Path(sourceFilePath), {
+    to: Path(destinationFilePath),
+    replacing: true
+  })
+}
+
+function calculateFileHash(filePath) {
     return runShell("md5" + " " + "-q" + " " + filePath)
 }
 
