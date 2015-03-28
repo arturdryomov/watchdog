@@ -49,7 +49,7 @@ function getFilePath(directoryPath, filePath) {
 }
 
 function downloadFile(fileLink, filePath) {
-    runShell("curl" + " " + fileLink + " " + "--output" + " " + filePath)
+    runShell("curl" + " " + fileLink + " " + "--output" + " " + filePath + " " + "--create-dirs")
 }
 
 function isFileAvailable(filePath) {
@@ -59,12 +59,9 @@ function isFileAvailable(filePath) {
 }
 
 function moveFile(sourceFilePath, destinationFilePath) {
-  filesApplication = Application("Finder")
+  runShell("mkdir" + " " + "-p" + " " + "`" + "dirname" + " " + destinationFilePath + "`")
 
-  filesApplication.move(Path(sourceFilePath), {
-    to: Path(destinationFilePath),
-    replacing: true
-  })
+  runShell("mv" + " " + sourceFilePath + " " + destinationFilePath)
 }
 
 function calculateFileHash(filePath) {
