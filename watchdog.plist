@@ -7,14 +7,15 @@
 		<key>Label</key>
 		<string>com.github.ming13.watchdog</string>
 
-		<key>Program</key>
-		<string>/usr/bin/osascript</string>
-
 		<key>ProgramArguments</key>
 		<array>
-			<string>osascript</string>
-			<string>/Users/USER/Library/Scripts/watchdog.scpt</string>
+			<string>/usr/bin/osascript</string>
+			<string>-l JavaScript</string>
+			<string>Library/Scripts/watchdog.scpt</string>
 		</array>
+
+		<key>ProcessType</key>
+		<string>Background</string>
 
 		<key>RunAtLoad</key>
 		<true/>
