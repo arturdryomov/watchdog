@@ -13,8 +13,9 @@ configuration:
 	@vim $(HOME)/Library/Scripts/watchdog.js
 
 start:
-	@launchctl bootstrap gui/$(UID) $(HOME)/Library/Scripts/watchdog.js
-	@launchctl kickstart gui/$(UID)/com.github.ming13.watchdog
+	@launchctl bootstrap gui/$(UID) $(HOME)/Library/LaunchAgents/com.github.ming13.watchdog.plist
+	@launchctl enable gui/$(UID)/com.github.ming13.watchdog
+	@launchctl kickstart -k gui/$(UID)/com.github.ming13.watchdog
 
 finish:
 	@launchctl kill KILL gui/$(UID)/com.github.ming13.watchdog
