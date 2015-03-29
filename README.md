@@ -29,7 +29,7 @@ The script should work automagically after you log in.
 You can run the command below to make the script work without relogin.
 
 ```
-$ make kickstart
+$ make start
 ```
 
 Plus you can check how OS X sees it.
