@@ -2,8 +2,12 @@ UID = $(shell id -u $(USER))
 
 
 install:
-	@cp watchdog.js $(HOME)/Library/Scripts/.
-	@cp watchdog.plist $(HOME)/Library/LaunchAgents/.
+	@cp watchdog.js $(HOME)/Library/Scripts/watchdog.js
+	@cp watchdog.plist $(HOME)/Library/LaunchAgents/com.github.ming13.watchdog.plist
+
+clean:
+	@rm -f $(HOME)/Library/Scripts/watchdog.js
+	@rm -f $(HOME)/Library/LaunchAgents/com.github.ming13.watchdog.plist
 
 configuration:
 	@vim $(HOME)/Library/Scripts/watchdog.js
